@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.cyan,
       ),
       home: BlocProvider(
           create: (context) => CounterCubit(),
@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
         bloc: cubit,
         listener: (context, state) {
           final snackbar = SnackBar(
-            content: Text('State is reached for $state times.'),
+            content: Text('State reached for $state times.'),
           );
           if (state % 5 == 0) {
             ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -70,11 +70,50 @@ class _MyHomePageState extends State<MyHomePage> {
                   '$state',
                   style: Theme.of(context).textTheme.headline4,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    cubit.incrementCounter();
-                  },
-                  child: const Text("Increment"),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.lime,
+                          minimumSize: const Size(80, 35),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0))),
+                      onPressed: () {
+                        cubit.incrementCounter();
+                      },
+                      child: const Text("ADD"),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.pink,
+                          minimumSize: const Size(80, 35),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0))),
+                      onPressed: () {
+                        cubit.decrementCounter();
+                      },
+                      child: const Text("MINUS"),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(80, 35),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0))),
+                        onPressed: () {
+                          cubit.reset();
+                        },
+                        child: const Text('RESET'))
+                  ],
                 )
               ],
             ),
